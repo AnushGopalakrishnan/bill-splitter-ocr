@@ -1,0 +1,21 @@
+name: Install Missing Types
+
+on: [push]
+
+jobs:
+  install-types:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Install Types
+        run: |
+          npm install --save-dev @types/react @types/node
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add package.json package-lock.json
+          git commit -m "Install required TypeScript types"
+          git push
